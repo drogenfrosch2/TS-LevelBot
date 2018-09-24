@@ -6,7 +6,7 @@ public class Program {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		try {
-			Telnet test = new Telnet("127.0.0.1", 10011, "", "");
+			Telnet test = new Telnet(/*"127.0.0.1", 10011, "", ""*/);
 		} catch (SocketException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
