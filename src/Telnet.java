@@ -26,31 +26,56 @@ public class Telnet
 		soc.connect(new InetSocketAddress("127.0.0.1", 10011));
 		inReader = new InputStreamReader(soc.getInputStream());
 		ouWriter = new OutputStreamWriter(soc.getOutputStream());
+	}
+	
+	public String read() throws IOException {
 		
-		//tryhard reading the stream
-		while(inReader.ready()) {
-			System.out.println(inReader.read());
-		}
+		int index = 0;
+		int[] intmessage = new int[1024];
 		
-		//login
-		String command = "login serveradmin PiW8lxm1\n";
-		char[] message = new char[1024];
-		command.getChars(0, command.length(), message, 0);
-		
-		ouWriter.write(message);
-		ouWriter.flush();
 		
 		//the program is faster than the server.
 		//through the do while waits the program for a response of the server.
 		//although it waits till the world ends, maybe fixing later,
 		do {
 			
-			System.out.println(inReader.read());
+			intmessage[index] = inReader.read();
+			index++;
 			
 		} while(inReader.ready());
 		
-		//closing the socket
-		System.out.println("closing socket.");
-		soc.close();
+		//stitching back together the answer of the server
+		String message = Character.toString((char)intmessage[0]);
+		
+		for(int x = 1; x < intmessage.length; x++) {
+		message = message + Character.toString((char)intmessage[x]);
+		}
+		
+		return message;
+	}
+	
+	public void send(String command) {
+		
+		//encoding the string to characters for transmission
+		char[] message = new char[1024];
+		command.getChars(0, command.length(), message, 0);
+		
+		//sending message
+		try {
+			ouWriter.write(message);
+			ouWriter.flush();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void disconnect() {
+		try {
+			soc.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
