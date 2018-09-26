@@ -30,64 +30,6 @@ public class Telnet
 		disconnect();
 	}
 	
-	
-	
-	private Client[] StringToClient(String data) {
-		
-		// without the double backslash the code does not cut at | 
-		String[] clients = data.split("\\|");
-		
-		Client[] newClients = new Client[clients.length];
-		
-		for(int x = 0; x < clients.length; x++) {
-				
-			String[] parameters = clients[x].split(" ");
-				
-			Client newClient = new Client();
-				
-			for(int y = 0; y < parameters.length; y++) {
-					
-				String[] parts = parameters[y].split("=");
-					
-				switch(parts[0]) {
-					case "cid":
-						newClient.setChannelID(Integer.parseInt(parts[1]));
-						break;
-					case "client_database_id":
-						newClient.setUserID(Integer.parseInt(parts[1]));
-						break;
-					case "client_nickname":
-						newClient.setUserName(parts[1]);
-						break;
-					case "client_away":
-								
-						break;
-					case "client_servergroups":
-						String[] groups = parts[1].split(",");	//split the groups
-						int igroups[] = new int[groups.length];
-							
-						for(int a = 0; a < groups.length; a++) igroups[a] = Integer.parseInt(groups[a]);	//getting the groups into the int array
-							
-						newClient.setServerGroups(igroups);	//give newClient the array
-						break;
-					case "client_idle_time":
-								
-						break;
-					default:
-						break;
-				}
-			}
-			newClients[x] = newClient;
-		}
-		return newClients;
-	}
-	
-	
-	
-	
-	//raw telnet connection stuff
-	//the separation between the user and the raw data to the server is achieved through the private classes in Telnet.
-	
 	private String read() throws IOException {
 		
 		int index = 0;
