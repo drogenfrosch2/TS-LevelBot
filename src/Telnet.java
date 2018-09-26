@@ -22,11 +22,10 @@ public class Telnet
 	public Telnet() throws IOException
 	{
 		//connecting and getting the streams
-		soc.connect(new InetSocketAddress("127.0.0.1", 10011));
+		soc.connect(new InetSocketAddress(Config.TSHostIP(), Config.TSPort()));
 		inReader = new InputStreamReader(soc.getInputStream());
 		ouWriter = new OutputStreamWriter(soc.getOutputStream());
 		
-		System.out.println(read());
 		disconnect();
 	}
 	

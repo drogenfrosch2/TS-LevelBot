@@ -2,15 +2,16 @@
 public class Convertion {
 
 	public static String login() {
-		return "login serveradmin PiW8lxm1\n";
+		
+		return "login " + Config.TSUserName() + " " + Config.TSPassword() + "\n";
 	}
 	
 	public static String useServer() {
-		return "use 1\n";
+		return "use " + Config.TSServerID() + "\n";
 	}
 	
 	public static String renameQuery() {
-		return "clientupdate client_nickname=needupdate\n";
+		return "clientupdate client_nickname=" + Config.TSNickName() + "\n";
 	}
 	
 	public static String getClientList() {
@@ -56,7 +57,7 @@ public class Convertion {
 						newClient.setUserName(parts[1]);
 						break;
 					case "client_away":
-										
+						//have to see if this is even used				
 						break;
 					case "client_servergroups":
 						String[] groups = parts[1].split(",");	//split the groups
@@ -67,7 +68,7 @@ public class Convertion {
 						newClient.setServerGroups(igroups);	//give newClient the array
 						break;
 					case "client_idle_time":
-										
+						//have to see if this is even used				
 						break;
 					default:
 						break;
