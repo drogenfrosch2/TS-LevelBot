@@ -3,7 +3,12 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Properties;
-
+/**
+ * handles the config file and gives every other class access to the data.
+ * 
+ * @author timob
+ *
+ */
 public class Config {
 	
 	private static String file = "config.properties";
@@ -30,6 +35,11 @@ public class Config {
 	ScoreboardChannel 179
 	 */
 	
+	/**
+	 * loads the data. has to be run before any data is accessed.
+	 * 
+	 * if the config file doesn't exist, it creates a new one.
+	 */
 	public static void loadProperties()
 	{
 		try {
@@ -63,6 +73,9 @@ public class Config {
 		}
 	}
 	
+	/**
+	 * creates a new config file.
+	 */
 	private static void createProperties() {
 		try {
 			File configFile = new File(file);

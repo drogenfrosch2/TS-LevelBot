@@ -19,6 +19,10 @@ public class Telnet
 	private InputStreamReader inReader;
 	private OutputStreamWriter ouWriter;
 	
+	/**
+	 * initializes the class and connects to the server as in the config file.
+	 * @throws IOException
+	 */
 	public Telnet() throws IOException
 	{
 		//connecting and getting the streams
@@ -29,6 +33,11 @@ public class Telnet
 		disconnect();
 	}
 	
+	/**
+	 * reads the answer from the server and returns it as string.
+	 * @return
+	 * @throws IOException
+	 */
 	private String read() throws IOException {
 		
 		int index = 0;
@@ -55,6 +64,10 @@ public class Telnet
 		return message;
 	}
 	
+	/**
+	 * sends the command to the Teamspeak server.
+	 * @param command
+	 */
 	private void send(String command) {
 		
 		//encoding the string to characters for transmission
@@ -71,6 +84,9 @@ public class Telnet
 		}
 	}
 	
+	/**
+	 * closes the connection.
+	 */
 	private void disconnect() {
 		try {
 			soc.close();

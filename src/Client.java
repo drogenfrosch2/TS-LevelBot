@@ -1,4 +1,9 @@
-
+/**
+ * contains the needed information for the clients.
+ * 
+ * @author timob
+ *
+ */
 public class Client {
 	
 	private int userID;
@@ -9,6 +14,16 @@ public class Client {
     private EnmStatus status;
     
     public Client() {
+    	
+    	status = EnmStatus.online;
+    	
+    }
+    
+    public Client(int ID, int Time, String Name) {
+    	
+    	userID = ID;
+    	time = Time;
+    	userName = Name;
     	
     	status = EnmStatus.online;
     	
