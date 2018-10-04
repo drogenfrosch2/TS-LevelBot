@@ -13,6 +13,11 @@ public class Config {
 	
 	private static String file = "config.properties";
 	
+	private static int tickTime;
+	private static int scoreboardID;
+	private static int[] ignoredChannel;
+	private static int[][] timeCaps;
+	
 	private static String tsHostIP;
 	private static String tsPort;
 	private static String tsServerID;
@@ -53,6 +58,31 @@ public class Config {
 			props.load(reader);
 			reader.close();
 			
+			tickTime = Integer.parseInt(props.getProperty("tickTime", "2"));
+			scoreboardID = Integer.parseInt(props.getProperty("scoreboardID"));
+			
+			//get the ignored channel
+			String raw = props.getProperty("ignoredChannel");
+			String[] numbers = raw.split("\\,");
+			ignoredChannel = new int[numbers.length];
+			for(int x = 0; x < numbers.length; x++) 
+				ignoredChannel[x] = Integer.parseInt(numbers[x]);
+			
+			raw = null;
+			
+			//get the groups
+			raw = props.getProperty("timeCaps", "");
+			String[] pairs = raw.split("\\|");
+			
+			timeCaps = new int[pairs.length][2];
+			
+			for(int x = 0; x < pairs.length; x++) {
+				String[] single = pairs[x].split(",");
+				timeCaps[x][0] = Integer.parseInt(single[0]);	//the first dimension is the pair, the second is time for 0 and group id for 1
+				timeCaps[x][1] = Integer.parseInt(single[1]);
+			}
+			
+			
 			tsHostIP = props.getProperty("tsHostIP", "127.0.0.1");
 			tsPort = props.getProperty("tsPort", "10011");
 			tsServerID = props.getProperty("tsServerID", "1");
@@ -81,6 +111,11 @@ public class Config {
 			File configFile = new File(file);
 			FileWriter writer = new FileWriter(configFile);
 			Properties props = new Properties();
+			
+			props.setProperty("tickTime", "2");
+			props.setProperty("scoreboardID", "");
+			props.setProperty("ignoredChannel", "");
+			props.setProperty("timeCaps", "");
 			
 			props.setProperty("tsHostIP", "127.0.0.1");
 			props.setProperty("tsPort", "10011");
@@ -145,5 +180,21 @@ public class Config {
 	
 	public static String DBName() {
 		return dbName;
+	}
+	
+	public static int TickTime() {
+		return tickTime;
+	}
+	
+	public static int ScoreboardID() {
+		return scoreboardID;
+	}
+	
+	public static int[][] Level(){
+		return timeCaps;
+	}
+	
+	public static int[] IgnoredChannel() {
+		return ignoredChannel;
 	}
 }

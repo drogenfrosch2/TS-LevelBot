@@ -1,3 +1,4 @@
+
 /**
  * Converts the answers from the Teamspeak server and the MySQL server to the Client datatype and the other way around.
  * 
@@ -10,6 +11,10 @@ public class Convertion {
 	public static String login() {
 		
 		return "login " + Config.TSUserName() + " " + Config.TSPassword() + "\n";
+	}
+	
+	public static String logout() {
+		return "logout \n";
 	}
 	
 	public static String useServer() {

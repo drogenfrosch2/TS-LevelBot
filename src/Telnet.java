@@ -7,6 +7,7 @@ import java.net.*;
 import java.net.SocketException;
 import java.util.*;
 
+
 /**
  * does the communication to the TS server over Telnet.
  * 
@@ -23,14 +24,83 @@ public class Telnet
 	 * initializes the class and connects to the server as in the config file.
 	 * @throws IOException
 	 */
-	public Telnet() throws IOException
+	public Telnet()
 	{
+		this.connect();
+	}
+	
+	/** 
+	 * connect to the server and login
+	 */
+	private void connect() {
 		//connecting and getting the streams
-		soc.connect(new InetSocketAddress(Config.TSHostIP(), Config.TSPort()));
-		inReader = new InputStreamReader(soc.getInputStream());
-		ouWriter = new OutputStreamWriter(soc.getOutputStream());
+		try {
+			soc.connect(new InetSocketAddress(Config.TSHostIP(), Config.TSPort()));
+			inReader = new InputStreamReader(soc.getInputStream());
+			ouWriter = new OutputStreamWriter(soc.getOutputStream());
+			
+			this.read();
+			this.send(Convertion.login());
+			this.read();
+			this.send(Convertion.useServer());
+			this.read();
+			this.send(Convertion.renameQuery());
+			this.read();
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * gets the clients from the server
+	 * @return
+	 */
+	public List<Client> getClientList(){
 		
-		disconnect();
+		this.send(Convertion.getClientList());
+		
+		Client[] test;
+		
+		try {
+			test = Convertion.convertClientList(this.read());
+			
+			List<Client> Clients = Arrays.asList(test);
+			
+			return Clients;
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public void updateScoreBoard(List<Client> clientList){
+		String scores = "[B]The\\stime\\sin\\sminutes:[/B]\\n";
+		
+		for(int x = 0; x < clientList.size(); x++) {
+			scores= scores + clientList.get(x).getUserName() + "\\s"+ clientList.get(x).getTime() / 60 +"\\n";
+		}
+		
+		this.send(Convertion.editChannelText(scores, Config.ScoreboardID()));
+	}
+	
+	/**
+	 * removes the groups
+	 */
+	public void removeGroup(int UserID, int GroupID) {
+		this.send(Convertion.removeGroup(UserID, GroupID));
+	}
+	
+	/**
+	 * sets the group
+	 * @param UserID
+	 * @param GroupID
+	 */
+	public void addGroup(int UserID, int GroupID) {
+		this.send(Convertion.setGroup(UserID, GroupID));
 	}
 	
 	/**
@@ -40,8 +110,15 @@ public class Telnet
 	 */
 	private String read() throws IOException {
 		
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		int index = 0;
-		int[] intmessage = new int[1024];
+		int[] intmessage = new int[4096];
 		
 		
 		//the program is faster than the server.
@@ -61,6 +138,7 @@ public class Telnet
 		message = message + Character.toString((char)intmessage[x]);
 		}
 		
+		System.out.println(message);
 		return message;
 	}
 	
@@ -69,7 +147,7 @@ public class Telnet
 	 * @param command
 	 */
 	private void send(String command) {
-		
+		System.out.println(command);
 		//encoding the string to characters for transmission
 		char[] message = new char[1024];
 		command.getChars(0, command.length(), message, 0);
@@ -87,8 +165,9 @@ public class Telnet
 	/**
 	 * closes the connection.
 	 */
-	private void disconnect() {
+	public void disconnect() {
 		try {
+			this.send(Convertion.logout());
 			soc.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

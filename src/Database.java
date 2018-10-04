@@ -44,6 +44,7 @@ public class Database {
 		    }
 		    else {
 		    	//if not make a new one
+		    	System.out.println("make new database");
 		    	stmt.execute(Convertion.createDatabase());
 		    	stmt.execute(Convertion.useDatabase());
 		    	stmt.execute(Convertion.createTable());
@@ -69,21 +70,23 @@ public class Database {
 	
 	/**
 	 * get the Time of the Clients in the List
-	 * @param ClientList
+	 * @param clientList
 	 * @return
 	 */
-	public List<Client> getClientTime(ArrayList<Client> ClientList) {
+	public List<Client> getClientTime(List<Client> clientList) {
+		this.connect();
+		
 		java.sql.Statement stmt = null;
 		ResultSet rs = null;
 		
 		try {
 			stmt = conn.createStatement();
 			
-			for(int index = 0; index < ClientList.size(); index++) {
-				rs = stmt.executeQuery(Convertion.getClientTime(ClientList.get(index).getUserID()));
+			for(int index = 0; index < clientList.size(); index++) {
+				rs = stmt.executeQuery(Convertion.getClientTime(clientList.get(index).getUserID()));
 				
-				if(rs.first()) ClientList.get(index).setUserID(rs.getInt(1));
-				else this.createClient(ClientList.get(index));
+				if(rs.first()) clientList.get(index).setTime(rs.getInt(1));
+				else this.createClient(clientList.get(index));
 			}
 			
 		} catch (SQLException e) {
@@ -91,26 +94,32 @@ public class Database {
 			e.printStackTrace();
 		}
 		
-		return ClientList;
+		
+		this.disconnect();
+		return clientList;
 	}
 	
 	/**
 	 * Update the client time in the Database
-	 * @param ClientList
+	 * @param clientList
 	 */
-	public void setClientTime(ArrayList<Client> ClientList) {
+	public void setClientTime(List<Client> clientList) {
+		this.connect();
+		
 		java.sql.Statement stmt = null;
 		
 		try {
 			stmt = conn.createStatement();
 			
-			for(int index = 0; index < ClientList.size(); index++) {
-				stmt.executeUpdate(Convertion.setClientTime(ClientList.get(index).getUserID(), ClientList.get(index).getTime(), ClientList.get(index).getUserName()));
+			for(int index = 0; index < clientList.size(); index++) {
+				stmt.executeUpdate(Convertion.setClientTime(clientList.get(index).getUserID(), clientList.get(index).getTime(), clientList.get(index).getUserName()));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		this.disconnect();
 	}
 	
 	/**

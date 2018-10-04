@@ -41,9 +41,11 @@ public class Client {
     public int[] getServerGroups() { return serverGroups; }
     public void setServerGroups(int[] ServerGroups) { serverGroups = ServerGroups; }
     
-    public int getTime() { return time; }
+    public int getTime() { System.out.println(time); return time; }
     public void setTime(int Time) { time = Time; }
+    public void addTime(int Time) { time = time + Time; }
     
+    public void setStatus(EnmStatus Status) { status = Status; }
     public EnmStatus getStatus() { return status; }
     
 }
