@@ -15,6 +15,7 @@ public class Program {
 	List<Client> ClientList;
 	
 	public static void main(String[] args) {
+		
 		new Program();
 	}
 	
@@ -28,10 +29,16 @@ public class Program {
 		theTimer = new Timer();
 		
 		theTimer.scheduleAtFixedRate(theTimerCode, 1000, Config.TickTime() * 60000);	//task to call, first delay, delay of the loop
-		
+		System.out.println("press any key to shut down");
+		System.console().readLine();
+		System.out.println("shutdown");
+		theTimer.cancel();
+		theServer.disconnect();
 	}
 	
 	public void tick() {
+		System.out.println("begin tick");
+		
 		//Clear the List
 		ClientList = null;
 		ClientList = new ArrayList<Client>();
@@ -111,7 +118,7 @@ public class Program {
 		
 		//update scoreboard
 		theServer.updateScoreBoard(ClientList);
-		System.out.println("feddich");
+		System.out.println("finished");
 	}
 	
 }

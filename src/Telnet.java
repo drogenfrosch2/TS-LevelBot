@@ -78,7 +78,7 @@ public class Telnet
 	}
 	
 	public void updateScoreBoard(List<Client> clientList){
-		String scores = "[B]The\\stime\\sin\\sminutes:[/B]\\n";
+		String scores = "[B]The\\stime\\sin\\shours:[/B]\\n";
 		
 		for(int x = 0; x < clientList.size(); x++) {
 			scores= scores + clientList.get(x).getUserName() + "\\s"+ clientList.get(x).getTime() / 60 +"\\n";
@@ -111,7 +111,7 @@ public class Telnet
 	private String read() throws IOException {
 		
 		try {
-			Thread.sleep(1000);
+			Thread.sleep(500);	//currently the program is to fast, maybe later a timeout function gets added
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -138,7 +138,6 @@ public class Telnet
 		message = message + Character.toString((char)intmessage[x]);
 		}
 		
-		System.out.println(message);
 		return message;
 	}
 	
@@ -147,7 +146,6 @@ public class Telnet
 	 * @param command
 	 */
 	private void send(String command) {
-		System.out.println(command);
 		//encoding the string to characters for transmission
 		char[] message = new char[1024];
 		command.getChars(0, command.length(), message, 0);

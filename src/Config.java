@@ -11,7 +11,7 @@ import java.util.Properties;
  */
 public class Config {
 	
-	private static String file = "config.properties";
+	private static String file = "D:\\Userordner\\Desktop\\config.properties";
 	
 	private static int tickTime;
 	private static int scoreboardID;
@@ -59,7 +59,8 @@ public class Config {
 			reader.close();
 			
 			tickTime = Integer.parseInt(props.getProperty("tickTime", "2"));
-			scoreboardID = Integer.parseInt(props.getProperty("scoreboardID"));
+			scoreboardID = Integer.parseInt(props.getProperty("scoreboardID", "3"));
+			
 			
 			//get the ignored channel
 			String raw = props.getProperty("ignoredChannel");

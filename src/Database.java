@@ -17,10 +17,26 @@ public class Database {
 	
 	Connection conn;
 	
+	public Database(){
+		try {
+			Class.forName("com.mysql.jdbc.Driver").newInstance();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	public void connect() {
 		
 		try {
 			//get connection string, connect
+			
 			conn = DriverManager.getConnection(Convertion.connectionString());
 			
 		} catch (Exception e){
