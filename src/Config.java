@@ -11,7 +11,7 @@ import java.util.Properties;
  */
 public class Config {
 	
-	private static String file = "D:\\Userordner\\Desktop\\config.properties";
+	private static String file = ".\\config.properties";
 	
 	private static int tickTime;
 	private static int scoreboardID;
