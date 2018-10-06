@@ -118,7 +118,8 @@ public class Convertion {
 	}
 	
 	public static String setClientTime(int ClientID, int ClientTime, String ClientName) {
-		return "UPDATE `Clients` SET `ClientTime`="+ClientTime+",`ClientName`='"+ClientName+"' WHERE ClientID = "+ClientID+";";
+		//return "UPDATE `Clients` SET `ClientTime`="+ClientTime+",`ClientName`='"+ClientName+"' WHERE ClientID = "+ClientID+";";
+		return "UPDATE `Clients` SET `ClientTime`="+ClientTime+" WHERE ClientID = "+ClientID+";";
 	}
 	
 	public static String createClient(int ClientID, int ClientTime, String ClientName) {

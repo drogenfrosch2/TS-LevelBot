@@ -118,7 +118,7 @@ public class Telnet
 		}
 		
 		int index = 0;
-		int[] intmessage = new int[4096];
+		int[] intmessage = new int[16384];
 		
 		
 		//the program is faster than the server.
