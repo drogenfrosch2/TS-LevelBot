@@ -94,7 +94,7 @@ public class Convertion {
 	
 	//all MySQL commands
 	public static String connectionString() {
-		return "jdbc:mysql://" + Config.DBHostIP() + ":" + Config.DBPort() +"?user=" + Config.DBUserName() + "&password=" + Config.DBPassword();
+		return "jdbc:mysql://" + Config.DBHostIP() + ":" + Config.DBPort()+"?user=" + Config.DBUserName() + "&password=" + Config.DBPassword();
 	}
 	
 	public static String useDatabase() {
@@ -118,7 +118,7 @@ public class Convertion {
 	}
 	
 	public static String setClientTime(int ClientID, int ClientTime, String ClientName) {
-		return "UPDATE `clients` SET `ClientTime`="+ClientTime+",`ClientName`='"+ClientName+"' WHERE ClientID = "+ClientID+";";
+		return "UPDATE `Clients` SET `ClientTime`="+ClientTime+",`ClientName`='"+ClientName+"' WHERE ClientID = "+ClientID+";";
 	}
 	
 	public static String createClient(int ClientID, int ClientTime, String ClientName) {

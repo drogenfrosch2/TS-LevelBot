@@ -83,7 +83,7 @@ public class Program {
 			List<Integer> userGroupList = new ArrayList<Integer>();
 			
 			for(int x = 0; x < usergroups.length; x++) {
-				for(int y = 0; y < levelCaps.length/2; y++) 
+				for(int y = 0; y < levelCaps.length; y++) 
 					
 					if(usergroups[x] == levelCaps[y][1]) 
 						userGroupList.add(levelCaps[y][1]);
