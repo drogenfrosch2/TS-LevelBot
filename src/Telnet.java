@@ -81,7 +81,7 @@ public class Telnet
 		String scores = "[B]The\\stime\\sin\\shours:[/B]\\n";
 		
 		for(int x = 0; x < clientList.size(); x++) {
-			scores= scores + clientList.get(x).getUserName() + "\\s"+ clientList.get(x).getTime() / 60 +"\\n";
+			scores= scores + clientList.get(x).getUserName() + "\\s"+ clientList.get(x).getTime() / 60 +":" + clientList.get(x).getTime() % 60 + "\\n";
 		}
 		
 		this.send(Convertion.editChannelText(scores, Config.ScoreboardID()));
@@ -137,6 +137,8 @@ public class Telnet
 		for(int x = 1; x < intmessage.length; x++) {
 		message = message + Character.toString((char)intmessage[x]);
 		}
+		
+		System.out.println(message);
 		
 		return message;
 	}

@@ -52,7 +52,9 @@ public class Convertion {
 		for(int x = 0; x < clients.length; x++) {
 			// split the parameters		
 			String[] parameters = clients[x].split(" ");
-						
+			
+			Boolean isQuery = false;
+			
 			Client newClient = new Client();
 			//for each parameter		
 			for(int y = 0; y < parameters.length; y++) {
@@ -70,7 +72,14 @@ public class Convertion {
 						newClient.setUserName(parts[1]);
 						break;
 					case "client_away":
-						//have to see if this is even used				
+						//have to see if this is even used	
+						break;
+					case "client_type":
+						//if the client is actually a query, ignores the user
+						if(Integer.parseInt(parts[1]) == 1) {	//has to convert to int because otherwise the program doesn't do shit
+							y = parameters.length + 1;
+							isQuery = true;
+						}
 						break;
 					case "client_servergroups":
 						String[] groups = parts[1].split(",");	//split the groups
@@ -87,7 +96,17 @@ public class Convertion {
 						break;
 				}
 			}
-			newClients[x] = newClient;
+			if(!isQuery) {
+				newClients[x] = newClient;	//only adds the client, if it isn't a query
+			}
+			else {	//shortens the array and copies the normal users
+				Client[] copyClients = new Client[newClients.length-1];
+				for(int y = 0; y < x; y++) {
+					copyClients[y] = newClients[y];
+				}
+				newClients = copyClients;
+			}
+			
 		}
 		return newClients;
 	}

@@ -27,7 +27,7 @@ public class Program {
 		theServer = new Telnet();
 		theTimerCode = new Timercode(this);
 		theTimer = new Timer();
-		
+
 		theTimer.scheduleAtFixedRate(theTimerCode, 1000, Config.TickTime() * 60000);	//task to call, first delay, delay of the loop
 		System.out.println("press any key to shut down");
 		System.console().readLine();
