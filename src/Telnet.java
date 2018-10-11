@@ -61,14 +61,8 @@ public class Telnet
 		
 		this.send(Convertion.getClientList());
 		
-		Client[] test;
-		
 		try {
-			test = Convertion.convertClientList(this.read());
-			
-			List<Client> Clients = Arrays.asList(test);
-			
-			return Clients;
+			return Convertion.convertClientList(this.read());
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

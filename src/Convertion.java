@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Converts the answers from the Teamspeak server and the MySQL server to the Client datatype and the other way around.
@@ -41,12 +43,12 @@ public class Convertion {
 		return "channeledit cid=" + channelID + " channel_description=" + text + "\n";
 	}
 	
-	public static Client[] convertClientList(String clientList) {
+	public static List<Client> convertClientList(String clientList) {
 		// split the clients apart 
 		// without the double backslash the code does not cut at | 
 		String[] clients = clientList.split("\\|");
 				
-		Client[] newClients = new Client[clients.length];
+		ArrayList<Client> newClients = new ArrayList<Client>();
 		
 		// for each client
 		for(int x = 0; x < clients.length; x++) {
@@ -77,7 +79,7 @@ public class Convertion {
 					case "client_type":
 						//if the client is actually a query, ignores the user
 						if(Integer.parseInt(parts[1]) == 1) {	//has to convert to int because otherwise the program doesn't do shit
-							y = parameters.length + 1;
+							y = parameters.length + 1;	//breaks the loop
 							isQuery = true;
 						}
 						break;
@@ -97,16 +99,8 @@ public class Convertion {
 				}
 			}
 			if(!isQuery) {
-				newClients[x] = newClient;	//only adds the client, if it isn't a query
+				newClients.add(newClient);	//only adds the client, if it isn't a query
 			}
-			else {	//shortens the array and copies the normal users
-				Client[] copyClients = new Client[newClients.length-1];
-				for(int y = 0; y < x; y++) {
-					copyClients[y] = newClients[y];
-				}
-				newClients = copyClients;
-			}
-			
 		}
 		return newClients;
 	}
