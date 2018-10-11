@@ -138,8 +138,6 @@ public class Telnet
 		message = message + Character.toString((char)intmessage[x]);
 		}
 		
-		System.out.println(message);
-		
 		return message;
 	}
 	
