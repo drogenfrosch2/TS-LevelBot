@@ -154,6 +154,7 @@ public class Telnet
 		}
 	}
 	
+	
 	/**
 	 * closes the connection.
 	 */

@@ -29,8 +29,29 @@ public class Program {
 		theTimer = new Timer();
 
 		theTimer.scheduleAtFixedRate(theTimerCode, 1000, Config.TickTime() * 60000);	//task to call, first delay, delay of the loop
-		System.out.println("press any key to shut down");
-		System.console().readLine();
+		System.out.println("type 'stop' to stop the server");
+		
+		
+		boolean stop = false;
+		String input = null;
+		
+		do {
+			input = System.console().readLine();
+			
+			if(input != null) {
+				switch(input) {
+				case "stop":
+					stop = true;
+					break;
+				default:
+					System.out.println("unknown command.");
+					break;
+				}
+			}
+			
+		}while (!stop);
+
+		
 		System.out.println("shutdown");
 		theTimer.cancel();
 		theServer.disconnect();
@@ -38,6 +59,7 @@ public class Program {
 	
 	public void tick() {
 		System.out.println("begin tick");
+		
 		
 		//Clear the List
 		ClientList = null;
