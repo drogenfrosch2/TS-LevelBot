@@ -72,12 +72,8 @@ public class Telnet
 	}
 	
 	public void updateScoreBoard(List<Client> clientList){
-		String scores = "[B]The\\stime\\sin\\shours:[/B]\\n";
 		
-		for(int x = 0; x < clientList.size(); x++) {
-			scores= scores + clientList.get(x).getUserName() + "\\s"+ clientList.get(x).getTime() / 60 +":" + clientList.get(x).getTime() % 60 + "\\n";
-		}
-		
+		String scores = Convertion.makeScoreboardText(clientList);
 		this.send(Convertion.editChannelText(scores, Config.ScoreboardID()));
 	}
 	

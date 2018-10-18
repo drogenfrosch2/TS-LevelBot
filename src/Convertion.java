@@ -43,6 +43,17 @@ public class Convertion {
 		return "channeledit cid=" + channelID + " channel_description=" + text + "\n";
 	}
 	
+	public static String makeScoreboardText(List<Client> clientList) {
+		String scores = "[B]The\\stime\\sin\\shours:[/B]\\n";
+		
+		for(int x = 0; x < clientList.size(); x++) {
+			scores= scores + String.format("%1$s\\s%2$d:%3$02d\\n", clientList.get(x).getUserName(), clientList.get(x).getTime() / 60, clientList.get(x).getTime() % 60);
+			
+		}
+		
+		return scores;
+	}
+	
 	public static List<Client> convertClientList(String clientList) {
 		// split the clients apart 
 		// without the double backslash the code does not cut at | 
@@ -119,7 +130,7 @@ public class Convertion {
 	}
 	
 	public static String createDatabase() {
-		return "CREATE DATABASE "+Config.DBName();
+		return "CREATE DATABASE " + Config.DBName();
 	}
 	
 	public static String createTable() {
