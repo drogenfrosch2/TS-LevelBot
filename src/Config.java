@@ -31,15 +31,6 @@ public class Config {
 	private static String dbPassword;
 	private static String dbName;
 	
-	/*
-	maybe added later or stored in the database
-	
-	TickDauer 1
-    ServerGroupAndTime 59:10,60:60,61:360,62:1440,63:10080,64:43200
-    UnratedChannel 25,26,27,28,169
-	ScoreboardChannel 179
-	 */
-	
 	/**
 	 * loads the data. has to be run before any data is accessed.
 	 * 
@@ -112,23 +103,43 @@ public class Config {
 			File configFile = new File(file);
 			FileWriter writer = new FileWriter(configFile);
 			Properties props = new Properties();
+			String input;
 			
-			props.setProperty("tickTime", "2");
-			props.setProperty("scoreboardID", "");
+			input = System.console().readLine("Delay of ticks in minutes: ");
+			props.setProperty("tickTime", input);
+			input = System.console().readLine("The ID of the scoreboard channel: ");
+			props.setProperty("scoreboardID", input);
+			//
 			props.setProperty("ignoredChannel", "");
+			/*Boolean stop = false;
+			String channels = "";
+			do {
+				input = System.console().readLine("The ID of the scoreboard channel: ");
+				channels = channels + input + ",";
+			}while(!stop);*/
 			props.setProperty("timeCaps", "");
 			
-			props.setProperty("tsHostIP", "127.0.0.1");
-			props.setProperty("tsPort", "10011");
+			input = System.console().readLine("The IP of the TS Server: ");
+			props.setProperty("tsHostIP", input);
+			input = System.console().readLine("Telnet Port (default is 10011): ");
+			props.setProperty("tsPort", input);
+			//
 			props.setProperty("tsServerID", "1");
-			props.setProperty("tsUserName", "");
-			props.setProperty("tsPassword", "");
-			props.setProperty("tsNickName", "TSLevelBot");
+			input = System.console().readLine("Serverquery name for the telnet login: ");
+			props.setProperty("tsUserName", input);
+			input = System.console().readLine("Serverquery password for the telnet login: ");
+			props.setProperty("tsPassword", input);
+			input = System.console().readLine("Name for the query on the server: ");
+			props.setProperty("tsNickName", input);
 			
-			props.setProperty("dbHostIP", "127.0.0.1");
-			props.setProperty("dbPort", "3306");
-			props.setProperty("dbUserName", "");
-			props.setProperty("dbPassword", "");
+			input = System.console().readLine("The IP of the MySQL Database: ");
+			props.setProperty("dbHostIP", input);
+			input = System.console().readLine("The Port of the MySQL Database: ");
+			props.setProperty("dbPort", input);
+			input = System.console().readLine("User Name for the MySQL login: ");
+			props.setProperty("dbUserName", input);
+			input = System.console().readLine("Password for the MySQL login: ");
+			props.setProperty("dbPassword", input);
 			props.setProperty("dbName", "TSLevelBot");
 			
 			props.store(writer, "host settings");

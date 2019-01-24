@@ -24,40 +24,36 @@ public class Telnet
 	 * initializes the class and connects to the server as in the config file.
 	 * @throws IOException
 	 */
-	public Telnet()
+	public Telnet() throws IOException
 	{
 		this.connect();
 	}
 	
 	/** 
 	 * connect to the server and login
+	 * @throws IOException 
 	 */
-	private void connect() {
+	private void connect() throws IOException {
 		//connecting and getting the streams
-		try {
-			soc.connect(new InetSocketAddress(Config.TSHostIP(), Config.TSPort()));
-			inReader = new InputStreamReader(soc.getInputStream());
-			ouWriter = new OutputStreamWriter(soc.getOutputStream());
+		soc.connect(new InetSocketAddress(Config.TSHostIP(), Config.TSPort()));
+		inReader = new InputStreamReader(soc.getInputStream());
+		ouWriter = new OutputStreamWriter(soc.getOutputStream());
 			
-			this.read();
-			this.send(Convertion.login());
-			this.read();
-			this.send(Convertion.useServer());
-			this.read();
-			this.send(Convertion.renameQuery());
-			this.read();
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		this.read();
+		this.send(Convertion.login());
+		this.read();
+		this.send(Convertion.useServer());
+		this.read();
+		this.send(Convertion.renameQuery());
+		this.read();
 	}
 	
 	/**
 	 * gets the clients from the server
 	 * @return
+	 * @throws IOException 
 	 */
-	public List<Client> getClientList(){
+	public List<Client> getClientList() throws IOException{
 		
 		this.send(Convertion.getClientList());
 		
@@ -71,7 +67,7 @@ public class Telnet
 		}
 	}
 	
-	public void updateScoreBoard(List<Client> clientList){
+	public void updateScoreBoard(List<Client> clientList) throws IOException{
 		
 		String scores = Convertion.makeScoreboardText(clientList);
 		this.send(Convertion.editChannelText(scores, Config.ScoreboardID()));
@@ -79,8 +75,9 @@ public class Telnet
 	
 	/**
 	 * removes the groups
+	 * @throws IOException 
 	 */
-	public void removeGroup(int UserID, int GroupID) {
+	public void removeGroup(int UserID, int GroupID) throws IOException {
 		this.send(Convertion.removeGroup(UserID, GroupID));
 	}
 	
@@ -88,8 +85,9 @@ public class Telnet
 	 * sets the group
 	 * @param UserID
 	 * @param GroupID
+	 * @throws IOException 
 	 */
-	public void addGroup(int UserID, int GroupID) {
+	public void addGroup(int UserID, int GroupID) throws IOException {
 		this.send(Convertion.setGroup(UserID, GroupID));
 	}
 	
@@ -134,20 +132,18 @@ public class Telnet
 	/**
 	 * sends the command to the Teamspeak server.
 	 * @param command
+	 * @throws IOException 
 	 */
-	private void send(String command) {
+	private void send(String command) throws IOException {
 		//encoding the string to characters for transmission
 		char[] message = new char[1024];
 		command.getChars(0, command.length(), message, 0);
 		
 		//sending message
-		try {
-			ouWriter.write(message);
-			ouWriter.flush();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
+		ouWriter.write(message);
+		ouWriter.flush();
+		
 	}
 	
 	
@@ -156,6 +152,7 @@ public class Telnet
 	 */
 	public void disconnect() {
 		try {
+			this.send(Convertion.editChannelText("[B]currently\\soffline[/B]\\n", Config.ScoreboardID()));
 			this.send(Convertion.logout());
 			soc.close();
 		} catch (IOException e) {

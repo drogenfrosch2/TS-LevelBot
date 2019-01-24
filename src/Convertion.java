@@ -55,6 +55,7 @@ public class Convertion {
 	}
 	
 	public static List<Client> convertClientList(String clientList) {
+		Log.info(clientList);
 		// split the clients apart 
 		// without the double backslash the code does not cut at | 
 		String[] clients = clientList.split("\\|");
@@ -118,7 +119,7 @@ public class Convertion {
 	
 	//all MySQL commands
 	public static String connectionString() {
-		return "jdbc:mysql://" + Config.DBHostIP() + ":" + Config.DBPort()+"?user=" + Config.DBUserName() + "&password=" + Config.DBPassword();
+		return "jdbc:mysql://" + Config.DBHostIP() + ":" + Config.DBPort()+"?user=" + Config.DBUserName() + "&password=" + Config.DBPassword()+"&useSSL=true";
 	}
 	
 	public static String useDatabase() {
